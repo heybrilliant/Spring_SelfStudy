@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Member Practice</title>
 
 <%@ include file="/WEB-INF/views/frame/metaheader.jsp" %>
 
