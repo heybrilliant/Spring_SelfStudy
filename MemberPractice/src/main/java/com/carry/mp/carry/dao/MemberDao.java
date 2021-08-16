@@ -1,4 +1,4 @@
-package com.carry.mp.member.dao;
+package com.carry.mp.carry.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,15 +8,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.carry.mp.jdbc.jdbcUtil;
 import com.carry.mp.member.domain.Member;
 
 
-@Repository
 public class MemberDao {
 
+	private MemberDao() {
+	}
+
+	private static MemberDao dao = new MemberDao();
+
+	public static MemberDao getInstance() {
+		return dao;
+	}
 
 //	public int insertMember(Connection conn, Member member) throws SQLException {
 //

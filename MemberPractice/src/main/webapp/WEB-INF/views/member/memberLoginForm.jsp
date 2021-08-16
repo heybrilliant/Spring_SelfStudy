@@ -14,8 +14,36 @@
 <%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <%@ include file="/WEB-INF/views/frame/nav.jsp" %>
 
-	<div>
-		<h1>Content : 일반회원 로그인</h1>
+	<div id="content">
+		<h2>일반회원 Login</h2>
+		<hr>
+
+		<form method="post">
+
+			<table>
+				<tr>
+					<th>ID</th>
+					<td><input type="text" name="memberid" 
+					value="${cookie.reid.value}"></td>
+				</tr>
+				<tr>
+					<th>PW</th>
+					<td><input type="password" name="password"></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>
+						<input type="checkbox" name="reid" value="on" 
+						${cookie.reid ne null? 'checked' : ''}>
+						아이디 기억하기</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><input type="submit"></td>
+				</tr>
+			</table>
+
+		</form>
 	</div>
 	
 	
