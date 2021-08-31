@@ -1,27 +1,23 @@
 package com.carry.mp.member.domain;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 public class Member {
-	
+
 	private int idx;
-	private String memberid;
-	private String password;
-	private String membername;
-	private String memberphoto;
-	private Timestamp regdate;
-	
-	public Member(int idx, String memberid, String password, String username, String memberphoto, Timestamp regdate) {
+	private String mememail;
+	private String mempw;
+	private String memname;
+	private String memphoto;
+
+	public Member(int idx, String mememail, String mempw, String memname, String memphoto) {
 		this.idx = idx;
-		this.memberid = memberid;
-		this.password = password;
-		this.membername = username;
-		this.memberphoto = memberphoto;
-		this.regdate = regdate;
+		this.mememail = mememail;
+		this.mempw = mempw;
+		this.memname = memname;
+		this.memphoto = memphoto;
 	}
-	
-	public Member() {}
+
+	public Member() {
+	}
 
 	public int getIdx() {
 		return idx;
@@ -31,61 +27,48 @@ public class Member {
 		this.idx = idx;
 	}
 
-	public String getMemberid() {
-		return memberid;
+	public String getMememail() {
+		return mememail;
 	}
 
-	public void setMemberid(String memberid) {
-		this.memberid = memberid;
+	public void setMememail(String mememail) {
+		this.mememail = mememail;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getMempw() {
+		return mempw;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMempw(String mempw) {
+		this.mempw = mempw;
 	}
 
-	public String getMembername() {
-		return membername;
+	public String getMemname() {
+		return memname;
 	}
 
-	public void setMembername(String membername) {
-		this.membername = membername;
-	}
-	
-	public String getMemberphoto() {
-		return memberphoto;
+	public void setMemname(String memname) {
+		this.memname = memname;
 	}
 
-	public void setMemberphoto(String memberphoto) {
-		this.memberphoto = memberphoto;
+	public String getMemphoto() {
+		return memphoto;
 	}
 
-	public Timestamp getRegdate() {
-		return regdate;
+	public void setMemphoto(String memphoto) {
+		this.memphoto = memphoto;
 	}
 
-	public void setRegdate(Timestamp regdate) {
-		this.regdate = regdate;
-	}
-	
-	// java.sql.TimeStamp -> java.util.Date
-	public Date getDate() {
-		return new Date(getRegdate().getTime());
-	}
-
-		
 	@Override
 	public String toString() {
-		return "Member [idx=" + idx + ", memberid=" + memberid + ", password=" + password + ", membername=" + membername
-				+ ", memberphoto=" + memberphoto + ", regdate=" + regdate + "]";
+		return "Member [idx=" + idx + ", mememail=" + mememail + ", mempw=" + mempw + ", memname=" + memname
+				+ ", memphoto=" + memphoto + "]";
+	
 	}
 
 	// Member -> LoginInfo
 	public LoginInfo toLoginInfo() {
-		return new LoginInfo(this.idx, this.memberid, this.membername, this.memberphoto);
+		return new LoginInfo(this.idx, this.mememail, this.memname, this.memphoto);
 	}
 	
 	

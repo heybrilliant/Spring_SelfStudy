@@ -109,10 +109,9 @@ public class MemberDao {
 		if(rs.next()) {
 			member = new Member();
 			member.setIdx(rs.getInt("idx"));
-			member.setMemberid(rs.getString("memberid"));
-			member.setPassword(rs.getString("password"));
-			member.setMembername(rs.getString("membername"));
-			member.setRegdate(rs.getTimestamp("regdate"));
+			member.setMememail(rs.getString("mememail"));
+			member.setMempw(rs.getString("mempw"));
+			member.setMemname(rs.getString("memname"));
 			}
 		
 		} catch (SQLException e) {

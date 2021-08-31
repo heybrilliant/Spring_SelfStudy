@@ -1,0 +1,23 @@
+/* index header */
+.header {
+    background: transparent;
+    transition: 0.3s;
+  }
+  .header.on {
+    background: #fff;
+  }
+  .header.scroll_on {
+    background:#fff;
+  }
+  .container {
+    margin: 0;
+  }
+
+  body {
+    font-family: "AppleSDGothicNeo";
+    min-height: 100vh;
+    font-size: 1.125em;
+    line-height: 1.6;
+    background: white;
+    place-items: center;
+  }

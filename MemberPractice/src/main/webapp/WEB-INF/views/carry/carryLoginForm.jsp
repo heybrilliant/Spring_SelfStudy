@@ -12,7 +12,6 @@
 <body>
 
 <%@ include file="/WEB-INF/views/frame/header.jsp" %>
-<%@ include file="/WEB-INF/views/frame/nav.jsp" %>
 
 	<div id="content">
 		<h2>캐리 Login</h2>

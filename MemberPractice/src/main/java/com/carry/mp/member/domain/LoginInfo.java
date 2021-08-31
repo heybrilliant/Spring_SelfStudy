@@ -7,8 +7,6 @@ public class LoginInfo {
 	private String memberName;
 	private String memberPhoto;
 	
-	
-	
 	public LoginInfo(int idx, String memberId, String memberName, String memberPhoto) {
 		this.idx = idx;
 		this.memberId = memberId;
