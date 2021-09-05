@@ -3,40 +3,30 @@ package com.project.gymcarry.carry.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.gymcarry.carry.CarryJoinDto;
+import com.project.gymcarry.carry.CarryDto;
 import com.project.gymcarry.member.service.JoinService;
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
-//원래 작업하던거!!!!!!
 
 @Controller
 @RequestMapping("carry/join")
-public class CarryJoinController2 {
+public class CarryJoinController {
 	
 	@Autowired
 	JoinService joinservice;
 	
 	@GetMapping
 	public String carryJoinForm() {
-		return "carry/carryJoinForm";
+		return "member/carryJoinForm";
 	}
 	
 	@PostMapping
-	public String carryJoin(@ModelAttribute CarryJoinDto carryDto) {
-		System.out.println("??? "+ carryDto.toString());
+	public String carryJoin(CarryDto carryDto) {
 		int result = joinservice.carryJoin(carryDto);
 		if(result == 1) {
-			System.out.println("캐리 회원가입 성공");
+			System.out.println("캐리회원가입성공");
 		}
-		return "redirect:/carry/login";
+		return "redirect:/member/login";
 	}
 }
