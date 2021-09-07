@@ -1,41 +1,53 @@
-package com.carry.mp.carry.controller;
+package com.project.gymcarry.carry.controller;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.carry.mp.carry.service.CarryLoginService;
+import com.project.gymcarry.member.MemberDto;
+import com.project.gymcarry.member.SessionDto;
+import com.project.gymcarry.member.service.LoginService;
 
 @Controller
-@RequestMapping("/carry/login")
 public class CarryLoginController {
-
-	@Autowired
-	private CarryLoginService carryLoginService;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@Autowired
+	private LoginService loginService;
+	
+	@GetMapping("/carry/login")
 	public String carryLoginForm() {
 		return "carry/carryLoginForm";
 	}
 	
-	// get방식일때는 view가 보여지도록, post 방식일때는 데이터를 받아서 처리하는 것을 구분
-	
-		@RequestMapping(method = RequestMethod.POST)
-		public String carryLogin(
-				@RequestParam("carryid") String carryid,
-				@RequestParam("password") String password,
-				@RequestParam(value = "reid", required = false) String reid,
-				HttpSession session,
-				HttpServletResponse response
-				) {
-			
-			// 사용자가 입력한 id, pw를 서비스에 전달해서 로그인 처리
-			
-			return "carry/carrylogin";
+	// 로그인 세션 저장
+	@PostMapping("/carry/carryLogin")
+	public String carryLogin(
+			@RequestParam("cremail") String id, 
+			@RequestParam("crpw") String pw,
+			HttpServletRequest request,
+			HttpSession session
+			) {
+		SessionDto sessionDto = loginService.carryLogin(id, pw);
+		if (sessionDto != null) {
+			session.setAttribute("loginSession", sessionDto);
+			System.out.println("캐리 세션 저장");
+			return "redirect:/index";
+		} else {
+			return "carry/loginForm";
 		}
+	}
+	
+	// 로그아웃 세션 삭제
+	@GetMapping("carry/logOut")
+	public String carryLogOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:/index";
+	}
 }
