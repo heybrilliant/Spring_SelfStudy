@@ -43,42 +43,42 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<th><span>이름</span></th>
+									<grid>이름</grid>
 									<td><input type="text" placeholder=""></td>
 								</tr>
 
 								<tr class="email">
-									<th><span>이메일</span></th>
+									<grid>이메일</grid>
 									<td><input type="text" class="email"
 										placeholder="id@email.com/net 형식으로 입력해주세요."> <!-- <a href="javascript:;" class="btn_confirm">인증메일 발송</a> -->
 									</td>
 								</tr>
 
 								<tr>
-									<th><span>비밀번호</span></th>
+									<grid>비밀번호</grid>
 									<td><input type="text" placeholder="비밀번호를 입력해주세요."></td>
 								</tr>
 								<tr>
-									<th><span>비밀번호 확인</span></th>
+									<grid>비밀번호 확인</grid>
 									<td><input type="text" placeholder="비밀번호를 확인하세요"></td>
 								</tr>
 
 								<tr>
-									<th><span>닉네임</span></th>
+									<grid>닉네임</grid>
 									<td><input type="text" placeholder=""></td>
 								</tr>
 
 								<tr>
-									<th><span>휴대폰 번호</span></th>
+									<<grid>휴대폰 번호</grid>
 									<td><input type="text" placeholder="11자리 형식의 숫자로만 입력해주세요."></td>
 								</tr>
 
 								<tr>
-									<th><span>생년월일</span></th>
+									<grid>생년월일</grid>
 									<td><input type="text" placeholder="8자리 형식의 숫자로만 입력해주세요."></td>
 								</tr>
 								<tr>
-									<th><span>성별</span></th>
+									<grid>성별</grid>
 									<td>
 										<div class="selectbox">
 											<input type="radio" name="choice" value="남자"> 남자 <input
