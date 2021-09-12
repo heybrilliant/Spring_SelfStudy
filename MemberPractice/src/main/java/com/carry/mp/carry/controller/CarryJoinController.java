@@ -1,4 +1,4 @@
-package com.project.gymcarry.carry.controller;
+package com.carry.mp.carry.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
