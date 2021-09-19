@@ -55,7 +55,7 @@
 					src="<c:url value="/images/icon/edit.png"/>" class="edit2">
 				</a>
 				<!-- 달력 DB 저장 버튼 -->
-				<button id="allsave">달력 일정
+				<button type="button" id="allsave">달력 일정
 					저장하기</button>
 					<!-- <button id="allsave" onclick="javascript:allSave();">달력 일정
 					저장하기</button> -->
@@ -141,8 +141,8 @@ var calendarEl = null;
 				nowIndicator : true, // 현재 시간 마크
 				dayMaxEvents : true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
 				locale : 'ko', // 한국어 설정
-				Boolean: true,
-				groupId : $('cridx'),
+				//Boolean: true,
+				/* groupId : $('cridx'), */
 			
 				eventAdd : function(obj) { // 이벤트가 추가되면 발생하는 이벤트
 					console.log(obj);
@@ -152,6 +152,7 @@ var calendarEl = null;
 				},
 				//Logic for clicking on an event
 			    eventClick: function(event_click){
+			    	console.log("이벤트 클릭 : " + event_click._def.title);
 			      alert('['+event_click.title + '] 일정을 삭제합니다.'),
 			      //Remove event from calendar
 				  event_click.remove()
@@ -194,7 +195,7 @@ var calendarEl = null;
 		
 		var allEvent = calendar.getEvents();
 		//var allEvent = calendar.getEventSourceById(groupId);
-		console.log(allEvent);
+		console.log("allEvent1 : " + allEvent);
 		
 		var events = new Array();
 		for(var i=0; i < allEvent.length; i++){
@@ -208,9 +209,10 @@ var calendarEl = null;
 			obj.end = allEvent[i]._instance.range.end; // 일정 종료 날짜 및 시간
 			
 			events.push(obj);
+			console.log("events : " + events);
+			console.log("obj : "+obj);
 		}
-		var jsondata = JSON.stringify(events);
-		console.log(jsondata);
+		 var jsondata = JSON.stringify(events);
 		
 		savedata(jsondata);
 	}
@@ -218,18 +220,19 @@ var calendarEl = null;
 	 function savedata(jsondata){
 		$.ajax({
 			type : 'POST',
-			url : '<c:url value="/mypage/carrycalendar"/>',
+			url : '<c:url value="/mypage/carrymypage"/>',
 			data : { 
-				"all data" : jsondata },
-			dataType :'json',
+				"request" : jsondata},
+			dataType :'text',
 			async : false
-		}) // 성공했을 때 실행
-		.done(function(result){
-			
-		}) 
-		/* .fail(function(request, states, error{
-			alert("에러가 발생했습니다 : " + error);
-		})) // 실패했을 때 실행 */
+		}).done(function(result){
+			console.log(result)
+		})
+		.fail(function(error){
+            console.log(error);
+        });// 실패했을 때 실행 *
+		console.log(	"data : " + jsondata);
+		
 	} 
 	
 	/* function getCalendarDataInDB(){
