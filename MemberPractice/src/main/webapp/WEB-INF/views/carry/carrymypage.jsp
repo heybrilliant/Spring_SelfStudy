@@ -223,7 +223,7 @@ var calendarEl = null;
 			url : '<c:url value="/mypage/carrymypage"/>',
 			data : { 
 				"request" : jsondata},
-			dataType :'text',
+			dataType :'json',
 			async : false
 		}).done(function(result){
 			console.log(result)
@@ -231,7 +231,7 @@ var calendarEl = null;
 		.fail(function(error){
             console.log(error);
         });// 실패했을 때 실행 *
-		console.log(	"data : " + jsondata);
+		console.log("data : " + jsondata);
 		
 	} 
 	
