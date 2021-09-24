@@ -1,65 +1,86 @@
-package com.carry.mp.member.service;
+package com.project.gymcarry.member.controller;
 
-@Service
-public class MailSenderService {
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.project.gymcarry.member.MemberDto;
+import com.project.gymcarry.member.MemberJoinDto;
+import com.project.gymcarry.member.service.JoinService;
+import com.project.gymcarry.member.service.MailSenderService;
+import com.project.gymcarry.member.service.memSha256;
+
+@Controller
+public class JoinController {
 
 	@Autowired
-	private JavaMailSender mailSender;
+	JoinService joinservice;
 	@Autowired
-	private SqlSessionTemplate sqlSession;
-	private UserDaoInterface userDao;
+	private MailSenderService mailsenderservice;
+
+	@GetMapping("member/join")
+	public String memberJoinForm() {
+		return "member/joinForm";
+	}
+
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@PostMapping("member/join")
+	public String memberJoin(@ModelAttribute MemberJoinDto memberDto, HttpServletRequest request,
+			HttpServletResponse response, Model model) throws Exception {
+
+		// 암호 확인
+		System.out.println("첫번째 암호 : " + memberDto.getMempw());
+		// 비밀번호 암호화(SHA256)
+		String encryPassword = memSha256.encrypt(memberDto.getMempw());
+		memberDto.setMempw(encryPassword);
+		System.out.println("두번째 : " + memberDto.getMempw());
+
+		// 멤버 회원가입 성공
+		System.out.println("입력 정보 : " + memberDto.toString());
+		int result = joinservice.memberJoin(memberDto, response, request);
+		if (result == 1) {
+			System.out.println("멤버 회원가입 성공");
+		}
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		// 인증메일 보내기 메소드
+		String result2 = mailsenderservice.send_mail(memberDto.getMememail(), memberDto.getMemname());
+		if (result2 != null) {
+			System.out.println("이메일 보내기 성공");
+			System.out.println("memberDto.getMememail = " + memberDto.getMememail());
+		}
+
+		out.println("<script>");
+		out.println("alert('회원가입이 완료되었습니다. 인증메일을 확인해주세요!'); location.href='/gym/index';");
+		out.println("</script>");
+		out.close();
+		
+		return "redirect:/index";
+	}
 	
-	// 이메일 난수 만드는 메서드
-	private String init() {
-		Random ran = new Random();
-		StringBuffer sb = new StringBuffer();
-		int num = 0;
+	@RequestMapping(value = "member/join/alterjoinkey", method = RequestMethod.POST)
+	public String alterjoinkey_Check(@ModelAttribute MemberDto memberDto) {
+		mailsenderservice.alterjoinkey_service(memberDto.getMememail(), memberDto.getJoinkey());
+		System.out.println("조인키 서비스!");
+		System.out.println("mememail=" + memberDto.getMememail());
+		System.out.println("joinkey=" + memberDto.getJoinkey());
 
-		do {
-			num = ran.nextInt(75) + 48;
-			if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
-				sb.append((char) num);
-			} else {
-				continue;
-			}
-
-		} while (sb.length() < size);
-		if (lowerCheck) {
-			return sb.toString().toLowerCase();
-		}
-		return sb.toString();
+		return "redirect:/index";
 	}
+}
 
-	// 난수를 이용한 키 생성
-	private boolean lowerCheck;
-	private int size;
-
-	public String getKey(boolean lowerCheck, int size) {
-		this.lowerCheck = lowerCheck;
-		this.size = size;
-		return init();
-	}
-
-	// 회원가입 발송 이메일(인증키 발송)
-	public void mailSendWithUserKey(String e_mail, String user_id, HttpServletRequest request) {
-		
-		String key = getKey(false, 20);
-		userDao = sqlSession.getMapper(UserDaoInterface.class);
-		userDao.GetKey(user_id, key); 
-		MimeMessage mail = mailSender.createMimeMessage();
-		String htmlStr = "<h2>안녕하세요 MS :p 민수르~ 입니다!</h2><br><br>" 
-				+ "<h3>" + user_id + "님</h3>" + "<p>인증하기 버튼을 누르시면 로그인을 하실 수 있습니다 : " 
-				+ "<a href='http://localhost:8080" + request.getContextPath() + "/user/key_alter?user_id="+ user_id +"&user_key="+key+"'>인증하기</a></p>"
-				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
-		try {
-			mail.setSubject("[본인인증] MS :p 민수르님의 인증메일입니다", "utf-8");
-			mail.setText(htmlStr, "utf-8", "html");
-			mail.addRecipient(RecipientType.TO, new InternetAddress(e_mail));
-			mailSender.send(mail);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-		
-		// 아마존 주소 : http://54.180.117.142/MS/user/key_alter?user_id=
-		
-	}
