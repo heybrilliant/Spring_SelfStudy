@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 import lombok.ToString;
 
+// Setter 주입 (=@Setter(onMethod_ = {@Autowired} ))
+// 생성자 주입 (=@AllArgsConstructor)
+// 필드 주입  (=@Autowired)
+
 @Component
 @ToString
 public class Restaurant {

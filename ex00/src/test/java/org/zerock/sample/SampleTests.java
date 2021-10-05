@@ -24,6 +24,8 @@ public class SampleTests {
 		log.info("test1!!!!!!!!!!!!!");
 		// autowired 확인
 		log.info(restaurant);
+		// log에서 Restaurant(chef=Chef()) 출력 확인 
+		// 만약 autowired를 삭제하면 Restaurant(chef=null)이 출력되는걸 확인할 수 있음 
 		
 	}
 	
