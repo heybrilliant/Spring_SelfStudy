@@ -16,6 +16,16 @@ public class SampleTests {
 	@Autowired
 	private Restaurant restaurant;
 	
+	@Autowired
+	// 필드 주입
+	private SampleHotel hotel;
+	
+	@Test
+	public void testHotel() {
+		// Hotel 테스트용 로그 기록
+		log.info(hotel);
+	}
+	
 	@Test
 	public void test1() {
 		
